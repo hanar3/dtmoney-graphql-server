@@ -15,7 +15,7 @@ export class TransactionType {
 }
 
 @InputType()
-export class TransactionInput {
+export class TransactionCreateInput {
   @Field()
   deviceId: string;
   @Field()
@@ -26,4 +26,9 @@ export class TransactionInput {
   type: "deposit" | "withdraw";
   @Field()
   category: string;
+}
+@InputType()
+export class TransactionListInput {
+  @Field()
+  deviceId: string;
 }
