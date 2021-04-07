@@ -1,5 +1,6 @@
-import { Resolver, Query } from "type-graphql";
-import { TransactionType } from "./TransactionType";
+import { Resolver, Query, Mutation, Arg } from "type-graphql";
+import { TransactionSchema } from "../../database/models/TransactionSchema";
+import { TransactionType, TransactionInput } from "./TransactionType";
 
 @Resolver()
 export class TransactionResolver {
@@ -8,5 +9,14 @@ export class TransactionResolver {
   @Query((returns) => [TransactionType])
   public async transactions() {
     return this.mTransactions;
+  }
+
+  @Mutation((returns) => TransactionType)
+  public async createTransaction(
+    @Arg("input") transactionInput: TransactionInput
+  ) {
+    const newTransaction = new TransactionSchema(transactionInput);
+    await newTransaction.save();
+    return newTransaction;
   }
 }

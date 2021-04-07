@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, InputType, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class TransactionType {
@@ -12,4 +12,18 @@ export class TransactionType {
   title: string;
   @Field()
   type: "deposit" | "withdraw";
+}
+
+@InputType()
+export class TransactionInput {
+  @Field()
+  deviceId: string;
+  @Field()
+  amount: number;
+  @Field()
+  title: string;
+  @Field()
+  type: "deposit" | "withdraw";
+  @Field()
+  category: string;
 }
