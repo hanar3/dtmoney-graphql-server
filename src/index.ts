@@ -1,4 +1,6 @@
+import "dotenv/config";
 import "reflect-metadata";
+import "./database";
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { TransactionResolver } from "./resolvers/Transaction/TransactionResolver";
