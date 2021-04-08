@@ -66,4 +66,5 @@ The following tools were used to build this project:
 - [Apollo Server](apollographql.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [Docker](https://www.docker.com/)
+- [Type GraphQL](https://typegraphql.com/)
 
