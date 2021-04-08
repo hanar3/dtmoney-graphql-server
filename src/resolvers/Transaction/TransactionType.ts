@@ -4,14 +4,27 @@ import { Field, InputType, ObjectType } from "type-graphql";
 export class TransactionType {
   @Field()
   id: string;
+
   @Field()
   deviceId: string;
+
   @Field()
   amount: number;
+
   @Field()
   title: string;
+
   @Field()
   type: "deposit" | "withdraw";
+
+  @Field()
+  category: string;
+
+  @Field()
+  createdAt: Date;
+
+  @Field()
+  updatedAt: Date;
 }
 
 @InputType()
