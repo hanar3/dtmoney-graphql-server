@@ -4,6 +4,7 @@ import { TransactionSchema } from "../../database/models/TransactionSchema";
 import { TransactionType, TransactionResult } from "./Transaction.type";
 import { TransactionCreateInput } from "./TransactionCreate.input";
 import { TransactionNotFound } from "./TransactionNotFound.type";
+import { TransactionUpdateInput } from "./TransactionUpdate.input";
 @Resolver()
 export class TransactionResolver {
   @Query((returns) => [TransactionType])
@@ -28,6 +29,27 @@ export class TransactionResolver {
     const transaction = await TransactionSchema.findByIdAndDelete(
       transactionId
     );
+    if (!transaction) {
+      return new TransactionNotFound();
+    }
+
+    return transaction;
+  }
+
+  @Mutation((returns) => TransactionResult)
+  public async updateTransaction(
+    @Arg("id")
+    transactionId: string,
+    @Arg("updateFields")
+    transactionUpdate: TransactionUpdateInput
+  ) {
+    const transaction:
+      | TransactionType
+      | undefined = await TransactionSchema.findByIdAndUpdate(
+      { _id: transactionId },
+      { ...transactionUpdate }
+    );
+
     if (!transaction) {
       return new TransactionNotFound();
     }
