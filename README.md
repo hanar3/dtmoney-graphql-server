@@ -15,10 +15,10 @@ Content Table
 </h4>
 
 ### About
-DTMoney is a fully functioning expense tracking WebApp
+DTMoney is a fully functioning expense tracking WebApp  -  Also See [dtmoney](https://github.com/hanar3/dtmoney)
 
 ### Features
-- [x] GraphQL API -  See [dtmoney](https://github.com/hanar3/dtmoney)
+- [x] GraphQL API
   - [x] Transaction Creation
   - [x] Transaction Update
   - [x] Transaction Deletion
