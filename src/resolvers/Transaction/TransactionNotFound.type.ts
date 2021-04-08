@@ -1,9 +1,10 @@
-import { Field } from "type-graphql";
+import { Field, ObjectType } from "type-graphql";
 
+@ObjectType()
 export class TransactionNotFound {
   @Field()
-  code: number;
+  code: number = 404;
 
   @Field()
-  message: string;
+  message: string = "Transaction not found";
 }

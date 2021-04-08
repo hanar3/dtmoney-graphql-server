@@ -1,5 +1,5 @@
-import { Field, InputType, ObjectType } from "type-graphql";
-
+import { createUnionType, Field, ObjectType } from "type-graphql";
+import { TransactionNotFound } from "./TransactionNotFound.type";
 @ObjectType()
 export class TransactionType {
   @Field()
@@ -27,21 +27,10 @@ export class TransactionType {
   updatedAt: Date;
 }
 
-@InputType()
-export class TransactionCreateInput {
-  @Field()
-  deviceId: string;
-  @Field()
-  amount: number;
-  @Field()
-  title: string;
-  @Field()
-  type: "deposit" | "withdraw";
-  @Field()
-  category: string;
-}
-@InputType()
-export class TransactionListInput {
-  @Field()
-  deviceId: string;
-}
+export const TransactionResult = createUnionType({
+  name: "TransactionResult",
+  types: () => [TransactionType, TransactionNotFound],
+  resolveType: (value) => {
+    return "id" in value ? TransactionType : TransactionNotFound;
+  },
+});

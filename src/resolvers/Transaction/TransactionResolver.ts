@@ -1,16 +1,11 @@
 import { Resolver, Query, Mutation, Arg } from "type-graphql";
-import { ApolloError } from "apollo-server";
-import { TransactionSchema } from "../../database/models/TransactionSchema";
-import {
-  TransactionType,
-  TransactionCreateInput,
-  TransactionListInput,
-} from "./Transaction.type";
 
+import { TransactionSchema } from "../../database/models/TransactionSchema";
+import { TransactionType, TransactionResult } from "./Transaction.type";
+import { TransactionCreateInput } from "./TransactionCreate.input";
+import { TransactionNotFound } from "./TransactionNotFound.type";
 @Resolver()
 export class TransactionResolver {
-  public mTransactions: TransactionType[] = [];
-
   @Query((returns) => [TransactionType])
   public async transactions(@Arg("deviceId") deviceId: string) {
     const transactions = await TransactionSchema.find({
@@ -21,20 +16,20 @@ export class TransactionResolver {
 
   @Mutation((returns) => TransactionType)
   public async createTransaction(
-    @Arg("deviceId") transactionInput: TransactionCreateInput
+    @Arg("input") transactionInput: TransactionCreateInput
   ) {
     const newTransaction = new TransactionSchema(transactionInput);
     await newTransaction.save();
     return newTransaction;
   }
 
-  @Mutation((returns) => TransactionType)
+  @Mutation((returns) => TransactionResult)
   public async deleteTransaction(@Arg("transactionId") transactionId: string) {
     const transaction = await TransactionSchema.findByIdAndDelete(
       transactionId
     );
     if (!transaction) {
-      throw new ApolloError("Transaction not found", "ENOTFOUND");
+      return new TransactionNotFound();
     }
 
     return transaction;
